@@ -3,10 +3,9 @@ PROGRAM fd1d_heat_explicit_prb
 
   IMPLICIT NONE
 
-  INTEGER :: t_num
-  PARAMETER (t_num=201)
-  INTEGER :: x_num
-  PARAMETER (x_num=21)
+  INTEGER, PARAMETER :: t_num = 201
+  INTEGER, PARAMETER :: x_num = 21
+
 
   REAL (KIND=dp) :: cfl
   REAL (KIND=dp) :: dt
@@ -108,9 +107,9 @@ CONTAINS
   FUNCTION func(j, x_num, x) RESULT (d)
     IMPLICIT NONE
 
-    INTEGER :: j, x_num
+    INTEGER, INTENT(IN) :: j, x_num
     REAL (KIND=dp) :: d
-    REAL (KIND=dp) :: x(x_num)
+    REAL,  (KIND=dp), INTENT(IN) :: x(x_num)
 
     d = 0.0E+00_dp
   END FUNCTION
@@ -118,16 +117,16 @@ CONTAINS
   SUBROUTINE fd1d_heat_explicit(x_num, x, t, dt, cfl, h, h_new)
     IMPLICIT NONE
 
-    INTEGER :: x_num
+    INTEGER, INTENT(IN) :: x_num
 
-    REAL (KIND=dp) :: cfl
+    REAL (KIND=dp) cfl
     REAL (KIND=dp) :: dt
     REAL (KIND=dp) :: h(x_num)
-    REAL (KIND=dp) :: h_new(x_num)
+    REAL (KIND=dp), INTENT(OUT) :: h_new(x_num)
     INTEGER :: j
-    REAL (KIND=dp) :: t
-    REAL (KIND=dp) :: x(x_num)
-    REAL (KIND=dp) :: f(x_num)
+    REAL (KIND=dp), INTENT(IN) :: t
+    REAL (KIND=dp), INTENT(IN) :: x(x_num)
+    REAL (KIND=dp), INTENT(IN) :: f(x_num)
 
     DO j = 1, x_num
       f(j) = func(j, x_num, x)
@@ -149,15 +148,15 @@ CONTAINS
 
     IMPLICIT NONE
 
-    REAL (KIND=dp) :: cfl
-    REAL (KIND=dp) :: dx
-    REAL (KIND=dp) :: dt
-    REAL (KIND=dp) :: k
-    REAL (KIND=dp) :: t_max
-    REAL (KIND=dp) :: t_min
+    REAL (KIND=dp), INTENT(IN) :: cfl
+    REAL (KIND=dp), INTENT(IN) :: dx
+    REAL (KIND=dp), INTENT(IN) :: dt
+    REAL (KIND=dp), INTENT(IN) :: k
+    REAL (KIND=dp), INTENT(IN) :: t_max
+    REAL (KIND=dp), INTENT(IN) :: t_min
     INTEGER :: t_num
-    REAL (KIND=dp) :: x_max
-    REAL (KIND=dp) :: x_min
+    REAL (KIND=dp), INTENT(IN) :: x_max
+    REAL (KIND=dp), INTENT(IN) :: x_min
     INTEGER :: x_num
 
     dx = (x_max-x_min)/real(x_num-1, kind=dp)
@@ -180,7 +179,7 @@ CONTAINS
     CHARACTER (LEN=*) :: output_filename
     INTEGER :: output_unit_id
     CHARACTER (LEN=30) :: string
-    REAL (KIND=dp) :: table(m, n)
+    REAL (KIND=dp), INTENT(IN) :: table(m, n)
 
     output_unit_id = 10
     OPEN (UNIT=output_unit_id, FILE=output_filename, STATUS='replace')
@@ -199,9 +198,9 @@ CONTAINS
     IMPLICIT NONE
 
     INTEGER :: n
-    REAL (KIND=dp) :: a(n)
-    REAL (KIND=dp) :: a_first
-    REAL (KIND=dp) :: a_last
+    REAL (KIND=dp), INTENT(IN) :: a(n)
+    REAL (KIND=dp), INTENT(IN) :: a_first
+    REAL (KIND=dp), INTENT(IN) :: a_last
     INTEGER :: i
 
     DO i = 1, n
@@ -221,7 +220,7 @@ CONTAINS
     INTEGER :: j
     CHARACTER (LEN=*) :: output_filename
     INTEGER :: output_unit_id
-    REAL (KIND=dp) :: x(n)
+    REAL (KIND=dp), INTENT(IN) :: x(n)
 
     output_unit_id = 11
     OPEN (UNIT=output_unit_id, FILE=output_filename, STATUS='replace')
